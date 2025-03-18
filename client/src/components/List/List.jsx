@@ -2,7 +2,7 @@ import React from 'react'
 import "./List.scss"
 import Card from "../Card/Card"
 
-const List = () => {
+const List = ({ catId, maxPrice, sort }) => {
 
   const data = [
     {
@@ -43,8 +43,28 @@ const List = () => {
     },
   ];
 
+  // Filter and sort the data based on props
+  let filteredData = [...data];
+  
+  if (catId) {
+    filteredData = filteredData.filter(item => item.id === catId);
+  }
+  
+  if (maxPrice) {
+    filteredData = filteredData.filter(item => item.price <= maxPrice);
+  }
+  
+  if (sort === "asc") {
+    filteredData.sort((a, b) => a.price - b.price);
+  } else if (sort === "desc") {
+    filteredData.sort((a, b) => b.price - a.price);
+  }
+
   return (
-    <div className='list'>{data?.map((item) => <Card item={item} key={item.id}/>)}
+    <div className='list'>
+      {filteredData.map((item) => (
+        <Card item={item} key={item.id}/>
+      ))}
     </div>
   )
 }
