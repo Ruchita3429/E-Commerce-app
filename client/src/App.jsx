@@ -8,7 +8,7 @@ import Footer from './components/Footer/Footer';
 import "./app.scss"
 
 const Layout = () => {
-  return(
+  return (
     <div className='app'>
       <Navbar/>
       <Outlet/>
@@ -27,11 +27,11 @@ const router = createBrowserRouter([
         element: <Home/>,
       },
       {
-        path: "/Product/:id",
+        path: "/product/:id",
         element: <Product/>,
       },
       {
-        path: "/Products/:id",
+        path: "/products/:id",
         element: <Products/>,
       },
     ]
