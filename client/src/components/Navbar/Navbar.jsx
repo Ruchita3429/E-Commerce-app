@@ -7,36 +7,37 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from 'react-router-dom';
 import "./Navbar.scss"
 import Cart from "../Cart/Cart";
+import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
+    const { getCartCount } = useCart();
+    
     return (
         <div className='navbar'>
             <div className='wrapper'>
                 <div className='left'>
                     <div className="item">
-                        <img src="/img/INDIA.png" alt=""/>  
+                        <img src="/img/INDIA.png" alt="India flag"/>
                         <KeyboardArrowDownIcon/>
-                        <div className="item">
-                            <span>INR</span>
-                            <KeyboardArrowDownIcon/>
-                        </div>
-                        <div className="item">
-                            <Link className='link' to="/products/1">Women</Link>
-                        </div>
-                        <div className="item">
-                            <Link className='link' to="/products/2">Men</Link>
-                        </div>
-                        <div className="item">   
-                            <Link className='link' to="/products/3">Children</Link>
-                        </div>
-                    </div>    
+                    </div>
+                    <div className="item">
+                        <span>INR</span>
+                        <KeyboardArrowDownIcon/>
+                    </div>
+                    <div className="item">
+                        <Link className='link' to="/products/1">Women</Link>
+                    </div>
+                    <div className="item">
+                        <Link className='link' to="/products/2">Men</Link>
+                    </div>
+                    <div className="item">
+                        <Link className='link' to="/products/3">Children</Link>
+                    </div>
                 </div>
 
                 <div className='centre'>
-                    <div className="item">
-                        <Link className='link' to="/">MYSTORE</Link>
-                    </div>
+                    <Link className='link' to="/">MYSTORE</Link>
                 </div>
 
                 <div className='right'>
@@ -44,13 +45,13 @@ const Navbar = () => {
                         <Link className='link' to="/">HomePage</Link>
                     </div>
                     <div className="item">
-                        <Link className='link' to="/">About</Link>
+                        <Link className='link' to="/about">About</Link>
                     </div>
                     <div className="item">
-                        <Link className='link' to="/">Contact</Link>
+                        <Link className='link' to="/contact">Contact</Link>
                     </div>
                     <div className="item">
-                        <Link className='link' to="/">STORES</Link>
+                        <Link className='link' to="/stores">STORES</Link>
                     </div>
                     <div className="icons">
                         <SearchIcon/>
@@ -58,7 +59,7 @@ const Navbar = () => {
                         <FavoriteBorderOutlinedIcon/>
                         <div className="cartIcon" onClick={() => setOpen(!open)}>
                             <ShoppingCartOutlinedIcon/>
-                            <span>0</span>
+                            <span>{getCartCount()}</span>
                         </div>
                     </div>
                 </div>

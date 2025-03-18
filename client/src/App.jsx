@@ -5,6 +5,7 @@ import Product from './pages/Product/Product';
 import Products from './pages/Products/Products';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import { CartProvider } from './context/CartContext';
 import "./app.scss"
 
 const Layout = () => {
@@ -40,9 +41,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div>
+    <CartProvider>
       <RouterProvider router={router} />
-    </div>
+    </CartProvider>
   );
 }
 
