@@ -47,12 +47,7 @@ const Navbar = () => {
                     <div className="item">
                         <Link className='link' to="/about">About</Link>
                     </div>
-                    <div className="item">
-                        <Link className='link' to="/contact">Contact</Link>
-                    </div>
-                    <div className="item">
-                        <Link className='link' to="/stores">STORES</Link>
-                    </div>
+                    
                     <div className="icons">
                         <SearchIcon/>
                         <PersonOutlineOutlinedIcon/>
