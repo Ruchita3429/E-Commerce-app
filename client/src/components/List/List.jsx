@@ -1,59 +1,29 @@
-import React from 'react'
-import "./List.scss"
-import Card from "../Card/Card"
+import React from 'react';
+import "./List.scss";
+import Card from "../Card/Card";
+import products from "../../data/product";
 
-const List = ({ catId, maxPrice, sort }) => {
+const List = ({ catId, maxPrice, sort, subcategories }) => {
+  const data = products;
 
-  const data = [
-    {
-      id: 1,
-      title: "Long Sleeve Graphic T-shirt",
-      img: "https://images.pexels.com/photos/4937359/pexels-photo-4937359.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-      img2: "https://images.pexels.com/photos/4937450/pexels-photo-4937450.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      isNew: true,
-      oldPrice: 280,
-      price: 180,
-    },
-    {
-      id: 2,
-      title: "Denim Jacket",
-      img: "https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      img2: "https://images.pexels.com/photos/7679721/pexels-photo-7679721.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      isNew: false,
-      oldPrice: 350,
-      price: 250,
-    },
-    {
-      id: 3,
-      title: "Summer Dress",
-      img: "https://images.pexels.com/photos/2235071/pexels-photo-2235071.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      img2: "https://images.pexels.com/photos/2235072/pexels-photo-2235072.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      isNew: true,
-      oldPrice: 400,
-      price: 300,
-    },
-    {
-      id: 4,
-      title: "Leather Bag",
-      img: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      img2: "https://images.pexels.com/photos/207300/pexels-photo-207300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      isNew: false,
-      oldPrice: 550,
-      price: 450,
-    },
-  ];
-
-  // Filter and sort the data based on props
   let filteredData = [...data];
-  
+
+  // Filter by main category (men, women, children)
   if (catId) {
-    filteredData = filteredData.filter(item => item.id === catId);
+    filteredData = filteredData.filter(item => item.category.includes(catId));
   }
-  
+
+  // Filter by subcategories (if any selected)
+  if (subcategories && subcategories.length > 0) {
+    filteredData = filteredData.filter(item =>
+      subcategories.some(sub => item.category.includes(sub))
+    );
+  }
+
   if (maxPrice) {
     filteredData = filteredData.filter(item => item.price <= maxPrice);
   }
-  
+
   if (sort === "asc") {
     filteredData.sort((a, b) => a.price - b.price);
   } else if (sort === "desc") {
@@ -63,10 +33,10 @@ const List = ({ catId, maxPrice, sort }) => {
   return (
     <div className='list'>
       {filteredData.map((item) => (
-        <Card item={item} key={item.id}/>
+        <Card item={item} key={item.id} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default List
+export default List;

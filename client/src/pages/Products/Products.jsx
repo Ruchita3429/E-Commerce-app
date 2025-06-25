@@ -3,28 +3,41 @@ import './Products.scss'
 import List from '../../components/List/List'
 import { useParams } from 'react-router-dom'
 
+const subcategories = [
+  { id: 'shoes', label: 'Shoes' },
+  { id: 'skirts', label: 'Skirts' },
+  { id: 'pants', label: 'Pants' },
+  { id: 'tops', label: 'Tops' },
+  { id: 'dresses', label: 'Dresses' },
+  { id: 'accessories', label: 'Accessories' },
+];
+
 const Products = () => {
-  const catId = parseInt(useParams().id)
+  const catId = useParams().id; // now a string: 'men', 'women', 'children'
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sort, setSort] = useState(null)
+  const [selectedSubcategories, setSelectedSubcategories] = useState([])
+
+  const handleSubcategoryChange = (e) => {
+    const value = e.target.value;
+    setSelectedSubcategories(prev =>
+      e.target.checked
+        ? [...prev, value]
+        : prev.filter(cat => cat !== value)
+    );
+  };
 
   return (
     <div className='products'>
       <div className="left">
         <div className="filterItem">
           <h2>Product Categories</h2>
-          <div className="inputItem">
-            <input type='checkbox' id='1' value={1}/>
-            <label htmlFor="1">Shoes</label>
-          </div>
-          <div className="inputItem">
-            <input type='checkbox' id='2' value={2}/>
-            <label htmlFor="2">Skirts</label>
-          </div>
-          <div className="inputItem">
-            <input type='checkbox' id='3' value={3}/>
-            <label htmlFor="3">Pants</label>
-          </div>
+          {subcategories.map(sub => (
+            <div className="inputItem" key={sub.id}>
+              <input type='checkbox' id={sub.id} value={sub.id} onChange={handleSubcategoryChange}/>
+              <label htmlFor={sub.id}>{sub.label}</label>
+            </div>
+          ))}
         </div>
         
         <div className="filterItem">
@@ -52,7 +65,7 @@ const Products = () => {
           src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600" 
           alt="Category" 
         />
-        <List catId={catId} maxPrice={maxPrice} sort={sort}/>
+        <List catId={catId} maxPrice={maxPrice} sort={sort} subcategories={selectedSubcategories}/>
       </div>
     </div>
   )
